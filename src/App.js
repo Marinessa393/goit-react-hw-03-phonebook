@@ -16,15 +16,24 @@ class App extends Component {
     filter: '',
   };
 
-  addContact = (name, number) => {
-    const newContact = {
-      id: uuidv4(),
-      name,
-      number,
-    };
-    this.setState(({ contacts }) => ({
-      contacts: [newContact, ...contacts],
-    }));
+  addContact = data => {
+    const { contacts } = this.state;
+
+    if (
+      contacts.find(el => data.name.toLowerCase() === el.name.toLowerCase())
+    ) {
+      alert(`${data.name} is already in contacts`);
+    } else {
+      const newContact = {
+        id: uuidv4(),
+        name: data.name,
+        number: data.number,
+      };
+
+      this.setState(({ contacts }) => ({
+        contacts: [...contacts, newContact],
+      }));
+    }
   };
 
   handleChangeFilter = filter => {
